@@ -1,10 +1,10 @@
 import mongoose from "mongoose";
 export const connectDB  = async ()=> {
     try{
-        await mongoose.connect('mongodb://127.0.0.1:27017');
+        await mongoose.connect('mongodb://127.0.0.1:27017/saraha-app');
         console.log('connected');
     }
     catch(error){
-        console.log(err);
+        console.log(error);
     }
     }

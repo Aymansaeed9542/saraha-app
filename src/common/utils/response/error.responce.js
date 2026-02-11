@@ -47,7 +47,7 @@ export const ForbiddenException = ({ message = "ForbiddenException", extra = und
 
 export const globalErrorHandler = (error, req, res, next) => {
     const status = error.status ? error.status : error.cause ? error.cause.status : 500;
-    const mood = mood == 'dev'
+    const mood = mood
     const deafultMessage = 'Something went wrong'
     const displayErrorMessage = error.message || deafultMessage
     const extra = error.extra || {};
