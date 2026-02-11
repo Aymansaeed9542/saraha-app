@@ -49,3 +49,4 @@ userSchema.virtual('userName')
     });
 
 export const userModel = mongoose.model('User', userSchema);
+
