@@ -11,13 +11,13 @@ export const bootstrap = async () => {
 
   await connectDB() // use await with any work with database
 
-  app.use(globalErrorHandler)  // global error handler middleware
 
 app.use('/auth',authRouter)
 
   app.use('{*dummy}', (req, res) => {
     res.status(404).json('Page not found')}) //check if the route is valid or not
 
+      app.use(globalErrorHandler)  // global error handler middleware
   app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
   });

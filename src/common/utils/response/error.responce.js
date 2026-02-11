@@ -1,4 +1,4 @@
-import {mood } from "../../../../config/env.service.js"
+import { mood } from "../../../../config/env.service.js"
 
 export const ErrorResponse = ({ status = 400, message = "Something went wrong", extra = undefined } = {}) => {
     throw new Error(message, { cause: { status, extra } })
@@ -46,14 +46,11 @@ export const ForbiddenException = ({ message = "ForbiddenException", extra = und
 }
 
 export const globalErrorHandler = (error, req, res, next) => {
-    const status = error.status ? error.status : error.cause ? error.cause.status : 500;
-    const mood = mood
-    const deafultMessage = 'Something went wrong'
-    const displayErrorMessage = error.message || deafultMessage
-    const extra = error.extra || {};
-    res.status(status).json({
-        status,
-        stack: mood ? error.stack : null,
-        errorMessage: mood ? displayErrorMessage : deafultMessage,
-    });
-}
+  const status = error.cause?.status || 500;
+  const displayErrorMessage = error.message || 'Something went wrong';
+  res.status(status).json({
+    status,
+    message: displayErrorMessage,
+    stack: mood ? error.stack : undefined,
+  });
+};
