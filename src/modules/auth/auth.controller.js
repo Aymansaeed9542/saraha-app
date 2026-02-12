@@ -14,6 +14,7 @@ router.post('/signup',async(req,res)=>{
 // route to log in a user
 router.post('/login', async(req,res)=>{
     const user = await logIn(req.body)
+
     return SuccessResponse({res, message:'user logged in successfully',status:200,data: user})
 })
 
