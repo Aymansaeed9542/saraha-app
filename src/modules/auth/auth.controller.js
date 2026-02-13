@@ -18,4 +18,5 @@ router.post('/login', async(req,res)=>{
     return SuccessResponse({res, message:'user logged in successfully',status:200,data: user})
 })
 
+
 export default router

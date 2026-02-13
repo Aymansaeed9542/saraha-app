@@ -28,10 +28,8 @@ export const signUp = async(data)=>{
 }
 
 
-
-
 // login function
-export const logIn = async(data)=>{
+export const logIn = async(data,)=>{
     // destructure the email and password from the request body
 const {email , password} = data
 
@@ -45,5 +43,11 @@ if(!existsUser){
 if(!await comparePassword(password, existsUser.password)){
     ConflictException({message:'invalid email or password'})
 }
-return {userName: existsUser.userName, email: existsUser.email}
+const generatedtoken = jwt.sign({id:existsUser._id}, jwtSecret, {expiresIn:'7d'})
+
+
+
+
+
+return {userName: existsUser.userName, email: existsUser.email, token:generatedtoken}
 }
