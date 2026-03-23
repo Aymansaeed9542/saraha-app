@@ -1,8 +1,10 @@
-import { jwtSecret } from "../../../config/env.service.js"
+import { googleClientId, jwtSecret } from "../../../config/env.service.js"
 import { comparePassword, hashPassword } from "../../common/utils/bcrypt/hashing.js"
 import { ConflictException } from "../../common/utils/response/error.responce.js"
 import { userModel } from "../../database/models/user.model.js"
 import jwt from 'jsonwebtoken'
+import { OAuth2Client } from "google-auth-library"
+import { providerEnums } from "../../common/enums/enum.service.js"
 
 // signUp function to create a new user in the database
 export const signUp = async(data)=>{
@@ -50,4 +52,36 @@ const generatedtoken = jwt.sign({id:existsUser._id}, jwtSecret, {expiresIn:'7d'}
 
 
 return {userName: existsUser.userName, email: existsUser.email, token:generatedtoken}
+}
+
+
+// googleLogin function
+export const googleLogin = async (idToken) => {
+    const client = new OAuth2Client(googleClientId);
+
+    // verify the google ID token
+    const ticket = await client.verifyIdToken({
+        idToken,
+        audience: googleClientId,
+    });
+    const payload = ticket.getPayload();
+    const { email, name, picture } = payload;
+
+    // check if the user already exists
+    let user = await userModel.findOne({ email });
+
+    if (!user) {
+        // if user does not exist, create a new one
+        user = await userModel.create({
+            userName: name,
+            email: email,
+            password: 'google_login_no_password', // placeholder password
+            provider: providerEnums.Google
+        });
+    }
+
+    // generate JWT token
+    const token = jwt.sign({ id: user._id }, jwtSecret, { expiresIn: '7d' });
+
+    return { userName: user.userName, email: user.email, token };
 }

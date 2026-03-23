@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { logIn, signUp } from "./auth.service.js";
+import { googleLogin, logIn, signUp } from "./auth.service.js";
 import { SuccessResponse } from "../../common/utils/response/success.responce.js";
 import { validation } from "../../common/utils/validation/validation.js";
-import { loginSchema, signupSchema } from "./validation/auth.validation.js";
+import { googleLoginSchema, loginSchema, signupSchema } from "./validation/auth.validation.js";
 
 
 const router = Router() 
@@ -13,9 +13,18 @@ router.post('/signup', validation(signupSchema), async (req, res) => {
     return SuccessResponse({ res, message: 'user added successfully', status: 201, data: addUser })
 })
 
+
 // route to log in a user
 router.post('/login', validation(loginSchema), async (req, res) => {
     const user = await logIn(req.body)
+
+    return SuccessResponse({ res, message: 'user logged in successfully', status: 200, data: user })
+})
+
+
+// route to log in with google
+router.post('/google', validation(googleLoginSchema), async (req, res) => {
+    const user = await googleLogin(req.body.token)
 
     return SuccessResponse({ res, message: 'user logged in successfully', status: 200, data: user })
 })
