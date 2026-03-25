@@ -25,6 +25,8 @@ export const signUp = async(data)=>{
     // create a new user in the database
     let addUser = await userModel.create({userName, email , password:hashPasssword, gender,phone})
 
+    const token = jwt.sign({id:addUser._id}, jwtSecret, {expiresIn:'7d'})
+
     return {userName: addUser.userName, email: addUser.email , token}
 
 }
