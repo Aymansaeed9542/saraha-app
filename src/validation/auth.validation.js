@@ -37,3 +37,10 @@ export const loginSchema = Joi.object({
     'string.empty': 'password is required',
   }),
 }).required();
+
+// google login validation schema
+export const googleLoginSchema = Joi.object({
+  token: Joi.string().required().messages({
+    'string.empty': 'token is required',
+  }),
+}).required();
