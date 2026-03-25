@@ -2,7 +2,7 @@ import { Router } from "express";
 import { googleLogin, logIn, signUp } from "./auth.service.js";
 import { SuccessResponse } from "../../common/utils/response/success.responce.js";
 import { validation } from "../../common/utils/validation/validation.js";
-import { googleLoginSchema, loginSchema, signupSchema } from "./validation/auth.validation.js";
+import { googleLoginSchema, loginSchema, signupSchema } from "../../validation/auth.validation.js";
 
 
 const router = Router() 
