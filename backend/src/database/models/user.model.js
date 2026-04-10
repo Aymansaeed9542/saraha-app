@@ -34,6 +34,10 @@ provider:{
     type:String,
     enum:Object.values(providerEnums),
     default:providerEnums.System
+},
+profilePicture: {
+    type: String,
+    default: 'default-avatar.png'
 }
 })
 

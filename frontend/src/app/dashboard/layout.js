@@ -58,6 +58,14 @@ export default function DashboardLayout({ children }) {
                </div>
             </div>
 
+            <Link 
+              href={`/u/${session?.user?.id}`}
+              className="w-full flex items-center justify-center gap-2 p-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 rounded-xl transition-all font-medium mb-3"
+            >
+              <User size={18} />
+              View My Profile
+            </Link>
+
             <button 
               onClick={copyProfileLink}
               className="w-full flex items-center justify-center gap-2 p-3 bg-primary/20 hover:bg-primary/30 text-primary border border-primary/30 rounded-xl transition-all font-medium"

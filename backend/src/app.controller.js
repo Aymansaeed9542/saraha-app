@@ -13,6 +13,9 @@ export const bootstrap = async () => {
   app.use(express.json());
   app.use(cors());
 
+  // Serve uploads folder staticly
+  app.use('/uploads', express.static('uploads'));
+
   await connectDB() // use await with any work with database
 
 
